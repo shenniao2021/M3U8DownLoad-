@@ -476,7 +476,7 @@ public class m3u8Download {
            }
 
        }
-       cutTs(file.getAbsolutePath(),file.getParent() +"\\"+ filename +".mp4");
+       cutTs(file.getAbsolutePath(),file.getParent() +"\\"+ filename + index+1 +".mp4");
        file.delete();
 
     }
