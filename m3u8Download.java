@@ -215,7 +215,6 @@ public class m3u8Download {
         String[] urlList = url1.split(";");
         count = urlList.length;
         for(int i = 0;i < count;i++){
-            index = i;
             URL url = new URL(urlList[i].trim().replace("\"",""));
             URLConnection rulConnection = null;
             HttpURLConnection httpUrlConnection = null;
@@ -254,9 +253,7 @@ public class m3u8Download {
                 String replace = asmr.findM3u8(new String(sb)).replace("\\", "");
                 String[] split = replace.split(";");
                 count += split.length - 1;
-                index--;
                 for(String m3u8Url : split){
-                    index++;
                     parseM3u8(m3u8Url);
                 }
             }catch (Exception e){
@@ -403,6 +400,7 @@ public class m3u8Download {
 
     public  void download(List<String> urlList) throws IOException, NoSuchPaddingException, NoSuchAlgorithmException, InvalidAlgorithmParameterException, InvalidKeyException, BadPaddingException, IllegalBlockSizeException {
          File newFile = new File(outPath+"\\abc");
+         index++;
         fileLength = urlList.size();
          if(!newFile.exists()){
              newFile.mkdir();
@@ -459,7 +457,7 @@ public class m3u8Download {
                out2.close();
                inStrm2.close();
            }
-           setMessage("共"+count+"个文件 当前第"+(index+1)+"个文件已下载片段数:"+i+"    当前文件片段总数总数:" + fileLength);
+           setMessage("共"+count+"个文件 当前第"+index+"个文件已下载片段数:"+i+"    当前文件片段总数总数:" + fileLength);
 
            inStrm.close();
            out.close();
@@ -470,13 +468,14 @@ public class m3u8Download {
                for(File fileT : list){
                    fileT.delete();
                }
-              if(count == index+1){
+              if(count == index){
                   setMessage("完成");
               }
            }
 
        }
-       cutTs(file.getAbsolutePath(),file.getParent() +"\\"+ filename + index+1 +".mp4");
+       cutTs(file.getAbsolutePath(),file.getParent() +"\\"+ filename + index +".mp4");
+
        file.delete();
 
     }
