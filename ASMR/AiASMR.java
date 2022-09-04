@@ -13,7 +13,7 @@ import java.util.List;
  * 2022/8/23 23:24
  */
 public class AiASMR implements ASMR {
-    String cookie = "";
+    String cookie = "starstruck_f6be77eddc2f40ba30a030eb7d294bcd=a8e0a2b2097fbc4e35fb21b1170cc394; wordpress_test_cookie=WP+Cookie+check; _ga=GA1.1.1069357527.1659824620; wordpress_logged_in_f6be77eddc2f40ba30a030eb7d294bcd=guozhi%7C1659997477%7CNzqw4wqPRTM52elFYpXPhqhfvXyZnDG48hjP1a4JROc%7Cdfd8ef80019d1768a990a4b1cb6d0815cfcb7f6ecad3d9a6216c273e289510ed; PHPSESSID=er9t0qlnu1giigtfdovbg5c3rh; _ga_2456WDN56B=GS1.1.1659823721.6.1.1659824682.0";
     String houzhui = ".ts";
 
     @Override

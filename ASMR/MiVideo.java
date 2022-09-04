@@ -117,13 +117,17 @@ public class MiVideo implements ASMR {
 
     @Override
     public String findM3u8(String sb2){
+        StringBuilder array = new StringBuilder();
         int last = sb2.indexOf("var player_aaaa");
         sb2 = sb2.substring(last);
         int begin = sb2.indexOf("</script> ");
         sb2 = sb2.substring(0,begin+1);
-        int https = sb2.lastIndexOf("https");
-        sb2 = sb2.substring(https);
-        int i = sb2.indexOf("\"");
-        return sb2.substring(0,i);
+        int m3u8 = 0;
+        while ((m3u8 = sb2.lastIndexOf(".m3u8")) != -1){
+            int https = sb2.lastIndexOf("https");
+            array.append(sb2, https, m3u8 + ".m3u8".length()).append(";");
+            sb2 = sb2.substring(0,https);
+        }
+        return array.toString();
     }
 }

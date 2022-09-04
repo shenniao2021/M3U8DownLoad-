@@ -251,7 +251,15 @@ public class m3u8Download {
             inStrm.close();
             setFilename(sb);
             try {
-                parseM3u8(asmr.findM3u8(new String(sb)).replace("\\",""));
+                String replace = asmr.findM3u8(new String(sb)).replace("\\", "");
+                String[] split = replace.split(";");
+                count += split.length - 1;
+                index--;
+                for(String m3u8Url : split){
+                    index++;
+//                    parseM3u8(m3u8Url);
+                    System.out.println(m3u8Url);
+                }
             }catch (Exception e){
                 System.out.println(e.getMessage());
             }
