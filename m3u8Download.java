@@ -214,6 +214,7 @@ public class m3u8Download {
     public  void findM3u8(String url1) throws Exception {
         String[] urlList = url1.split(";");
         count = urlList.length;
+        index = 0;
         for(int i = 0;i < count;i++){
             URL url = new URL(urlList[i].trim().replace("\"",""));
             URLConnection rulConnection = null;
