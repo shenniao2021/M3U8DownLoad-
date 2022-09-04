@@ -257,8 +257,7 @@ public class m3u8Download {
                 index--;
                 for(String m3u8Url : split){
                     index++;
-//                    parseM3u8(m3u8Url);
-                    System.out.println(m3u8Url);
+                    parseM3u8(m3u8Url);
                 }
             }catch (Exception e){
                 System.out.println(e.getMessage());
