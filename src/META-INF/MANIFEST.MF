@@ -1,0 +1,4 @@
+Manifest-Version: 1.0
+Main-Class: Start
+Class-Path: libs/bcprov-jdk16-139.jar
+
