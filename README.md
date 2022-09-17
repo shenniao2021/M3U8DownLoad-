@@ -1,5 +1,6 @@
 # M3U8DownLoad-
 自用的两个网址 只针对了这两个网址编写的视频下载 网站主要是ASMR视频
+
 https://www.aisasmr.com/ 这个网站容易403 而且部分视频需要登录 登录是PHP不懂 所以需要的自己去注册账号拿cookie填进去 
 https://www.gqtod.com/ 在输入框输入网址就行了 有播放器的网页就是了 ctrl+v自动补齐 ;  是以 ; 隔开每个网址的
 
