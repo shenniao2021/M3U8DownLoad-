@@ -141,7 +141,6 @@ public class GouASMR implements ASMR {
         }
         int httpsI = m3u8URL.indexOf("m3u8");
         m3u8URL = m3u8URL.substring(0,httpsI);
-        System.out.println(m3u8URL);
         return m3u8URL + "m3u8";
     }
 }
