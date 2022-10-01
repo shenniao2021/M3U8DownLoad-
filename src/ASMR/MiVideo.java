@@ -14,15 +14,16 @@ import java.util.List;
  * 2022/8/23 23:24
  */
 public class MiVideo implements ASMR {
+    String cookie = "";
 
     @Override
     public String getCookie() {
-        return null;
+        return cookie;
     }
 
     @Override
     public void setCookie(String cookie) {
-
+        this.cookie = cookie;
     }
 
     @Override
@@ -32,6 +33,7 @@ public class MiVideo implements ASMR {
         httpURLConnection.setRequestProperty("sec-ch-ua-platform","Windows");
         httpURLConnection.setRequestProperty("referer","https://www.gqtod.com/");
         httpURLConnection.addRequestProperty("Cache-Control", "no-cache");
+        httpURLConnection.addRequestProperty("cookie",cookie);
         try {
             httpURLConnection.connect();
         } catch (IOException e) {

@@ -67,7 +67,7 @@ public class m3u8Download {
     int count = 0;
     boolean zhuanma = true;
     public void strat() {
-        asmr.setCookie(properties.getProperty("cookie"));
+        asmr.setCookie(properties.getProperty("Aicookie"));
         outPath = properties.getProperty("outPath");
         JFrame jf = new JFrame();
         jf.setLayout(null);
@@ -146,7 +146,7 @@ public class m3u8Download {
             @Override
             public void mouseClicked(MouseEvent e) {
                 asmr = new AiASMR();
-                asmr.setCookie(properties.getProperty("cookie"));
+                asmr.setCookie(properties.getProperty("Aicookie"));
                 setMessage("爱上asmr");
             }
         });
@@ -159,6 +159,7 @@ public class m3u8Download {
             @Override
             public void mouseClicked(MouseEvent e) {
                 asmr = new MiASMR();
+                asmr.setCookie(properties.getProperty("Micookie"));
                 setMessage("美姬asmr");
             }
         });
@@ -171,12 +172,27 @@ public class m3u8Download {
             @Override
             public void mouseClicked(MouseEvent e) {
                 asmr = new MiVideo();
+                asmr.setCookie(properties.getProperty("Micookie"));
                 setMessage("美姬Video");
             }
         });
         jf.add(miVideo);
-        JEditorPane je3 = new JEditorPane();
 
+        JButton gouASMR = new JButton("狗窝ASMR");
+        gouASMR.setBounds(400,250,100,20);
+        gouASMR.setFont(new Font("微软雅黑", Font.BOLD,13));
+        gouASMR.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                asmr = new GouASMR();
+                asmr.setCookie(properties.getProperty("Goucookie"));
+                setMessage("狗窝ASMR");
+            }
+        });
+        jf.add(gouASMR);
+
+
+        JEditorPane je3 = new JEditorPane();
 
         JButton jbt = new JButton("提交");
         jbt.setBounds(400,100,100,100);

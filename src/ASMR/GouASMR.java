@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.List;
@@ -12,7 +14,7 @@ import java.util.List;
  * @Author wanglin
  * 2022/8/23 23:24
  */
-public class MiASMR implements ASMR {
+public class GouASMR implements ASMR {
     String cookie = "";
 
 
@@ -31,7 +33,7 @@ public class MiASMR implements ASMR {
         HttpURLConnection httpURLConnection = (HttpURLConnection)urlConnection;
         httpURLConnection.setRequestProperty("user-agent","Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/101.0.0.0 Safari/537.36");
         httpURLConnection.setRequestProperty("sec-ch-ua-platform","Windows");
-        httpURLConnection.setRequestProperty("referer","https://www.gqtod.com/");
+        httpURLConnection.setRequestProperty("referer","https://www.822gw.com");
         httpURLConnection.addRequestProperty("Cache-Control", "no-cache");
         httpURLConnection.addRequestProperty("cookie",cookie);
         try {
@@ -46,21 +48,8 @@ public class MiASMR implements ASMR {
     public void download(OutputStream out, InputStream inStrm, int fileLength) throws IOException {
         byte[] bytes = new byte[fileLength];
         int c;
-        int skip = 0;
-        int length = 181;
         while ((c = inStrm.read(bytes)) != -1) {
-            if(c > length || skip >= length){
-                if(skip < length){
-                    int jump = length - skip;
-                    out.write(bytes, length - skip, c - jump);
-                    skip += length - skip;
-                }else {
-                    out.write(bytes, 0, c);
-                }
-            }else {
-                skip = skip + c;
-            }
-
+            out.write(bytes,0,c);
         }
     }
 
@@ -70,7 +59,7 @@ public class MiASMR implements ASMR {
         int last = sb.indexOf("#EXT-X-ENDLIST");
         boolean isTrue = true;
         String temp = sb.substring(0,last);
-        int tempI = temp.lastIndexOf(".png");
+        int tempI = temp.lastIndexOf(".ts");
         temp = temp.substring(0,tempI);
         int length = temp.length() - 1;
         while (isTrue){
@@ -108,17 +97,51 @@ public class MiASMR implements ASMR {
 
     @Override
     public String findM3u8(String sb2){
-        StringBuilder array = new StringBuilder();
-        int last = sb2.indexOf("var player_aaaa");
-        sb2 = sb2.substring(last);
-        int begin = sb2.indexOf("</script> ");
-        sb2 = sb2.substring(0,begin+1);
-        int m3u8 = 0;
-        while ((m3u8 = sb2.lastIndexOf(".m3u8")) != -1){
-            int https = sb2.lastIndexOf("https");
-            array.append(sb2, https, m3u8 + ".m3u8".length()).append(";");
-            sb2 = sb2.substring(0,https);
+        int last = sb2.indexOf("https://www.822gw.com/e/DownSys/play/");
+        String sb = sb2.substring(last);
+        int i = sb.indexOf("\"");
+        sb = sb.substring(0, i);
+
+        URL url = null;
+        try {
+            url = new URL(sb);
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
         }
-        return array.toString();
+        System.out.println(sb);
+        URLConnection rulConnection = null;
+        HttpURLConnection httpUrlConnection = null;
+        InputStream inStrm = null;
+        try{
+                rulConnection = url.openConnection();
+                httpUrlConnection = this.config(rulConnection);
+                inStrm = httpUrlConnection.getInputStream();
+        }catch (IOException io){
+            io.printStackTrace();
+        }
+        byte[] bytes = new byte[1024];
+        StringBuilder sbAfter = new StringBuilder();
+        int c = 0;
+        try {
+            while ((c = inStrm.read(bytes)) != -1){
+               sbAfter.append(new String(bytes,0,c));
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        int afterLast = sbAfter.indexOf("new DPlayer");
+        String m3u8URL = "";
+        if(afterLast!=-1){
+            m3u8URL = sbAfter.substring(afterLast);
+            int begin = m3u8URL.indexOf("url: ");
+            m3u8URL = m3u8URL.substring(begin+6);
+        }else {
+            throw new RuntimeException("未找到m3u8地址");
+        }
+        int httpsI = m3u8URL.indexOf("m3u8");
+        m3u8URL = m3u8URL.substring(0,httpsI);
+        System.out.println(m3u8URL);
+        return m3u8URL + "m3u8";
     }
 }
